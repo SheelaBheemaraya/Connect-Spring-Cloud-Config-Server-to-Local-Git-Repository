@@ -1,0 +1,48 @@
+# Connect-Spring-Cloud-Config-Server-to-Local-Git-Repository
+
+Step 1: Create a Maven project using Spring Initializr https://start.spring.io give  project name -->spring-cloud-config-server
+
+Step 2: Add the Spring Boot DevTools and Config Server dependencies.
+
+*Installing Git and creating a local repository
+Step 1: Download Git from https://git-scm.com/ and install it.
+
+Step 2: Create a Git repository and store the files that we want to be able to configure.
+
+>>Creating a new directory:
+
+mkdir git-localconfig-repo  
+cd git-localconfig-repo/ 
+
+>>Initializing a new Git repository:
+git init  
+
+Step 3: Now move to the spring-cloud-config-server project and add a link to the specific folder.
+
+Right-click on the spring-cloud-config-server project.
+Click on Build Path->Configure Build Path…
+->Select the Source tab.
+->Click on Link Source and browse the folder git-localconfig-repo.
+->Right click on the folder-> New -> Other -> File -> Next -> Provide the file name: limits-service-properties-> Finish.
+->Now write the following code in the properties file:
+limits-service.minimum=8  
+limits-service.maximum=888  
+
+step4:The command commits any file we have added with the git add command and also commits any files we have changed since then.
+->git add -A 
+->git commit -m "first commit"  
+
+step5:connect spring-cloud-config-server to the local git repository. First, we will find the folder path.
+Right-click on git-localconfig-repo -> Properties -> copy the Location label address and paste it into the application.properties file.
+spring.application.name=spring-cloud-config-server
+server.port=8888
+spring.cloud.config.server.git.uri=file:///D:\git-localconfig-repo
+
+step6:Add the annotation @EnableConfigServer in the SpringCloudConfigServerApplication.java file.
+
+step7:Type the following URL in the browser:
+GET Request:   localhost:8888/limits-service/default
+               localhost:8888/limits-service/dev
+               localhost:8888/limits-service/qa
+
+
