@@ -42,7 +42,34 @@ step6:Add the annotation @EnableConfigServer in the SpringCloudConfigServerAppli
 
 step7:Type the following URL in the browser:
 GET Request:   localhost:8888/limits-service/default
-               localhost:8888/limits-service/dev
-               localhost:8888/limits-service/qa
+
+
+
+------------------------------------------------------------------------------------------------------------------------------
+Configuration for Multiple Environment in Git Repository
+ Dev, QA, Stage, and Production. We can configure these three services in SpringCloudConfigServer.
+ ->To overwrite these values, copy the limits-service.properties and paste in the folder git-localconfig-reporename it with limits-service-dev.properties. Now update the minimum and maximum values.
+limits-service.minimum=1  
+limits-service.maximum=111  
+              
+->Rename it with limits-service-qa.properties. Now update the minimum and maximum values.
+limits-service.minimum=2  
+limits-service.maximum=222  
+
+->open the Git Bash and execute the following commands:
+
+->Create the directory in which we want to add files.
+cd git-localconfig-repo  
+git add -A
+git commit -m "Dev and QA"  
+
+
+->Now we can access the properties Dev and QA.
+
+Type the following in the address bar of the browser.
+
+localhost:8888/limits-service/qa 
+localhost:8888/limits-service/dev
+
 
 
